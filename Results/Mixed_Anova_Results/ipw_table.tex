@@ -1,0 +1,30 @@
+\begin{table}[H]
+\centering
+\caption{Interaction Pairwise Contrasts}
+\label{table:ipw_table}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\fontsize{18}{20}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8.5cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}}
+\toprule
+Contrast & \(\Delta M\) & $df$ & $t$ & $p$ & Effect size & 95\%\;CI\\
+\midrule
+\em{(Overall risk - Severity) | DK - UK} & $-0.01$ & $714.2$ & $0.13$ & $\textit{p} = 1$ & $g = 0.01$ & $[-0.15$, 0.17$]$\\
+\em{(Overall risk - Severity) | DK - US} & $-0.13$ & $784.6$ & $1.22$ & $\textit{p} = .809$ & $g = -0.09$ & $[-0.27$, 0.09$]$\\
+\em{(Overall risk - Severity) | UK - US} & $-0.12$ & $719.6$ & $1.28$ & $\textit{p} = .809$ & $g = -0.11$ & $[-0.33$, 0.11$]$\\
+\em{(Susceptibility - Severity) | DK - UK} & $-0.39$ & $731.5$ & $4.29$ & $\textit{p} < .001$ & $g = -0.23$ & $[-0.37$, -0.08$]$\\
+\em{(Susceptibility - Severity) | DK - US} & $-0.33$ & $715.9$ & $3.48$ & $\textit{p} < .01$ & $g = -0.21$ & $[-0.37$, -0.05$]$\\
+\addlinespace
+\em{(Susceptibility - Severity) | UK - US} & $0.07$ & $784.0$ & $0.64$ & $\textit{p} = 1$ & $g = 0.02$ & $[-0.04$, 0.07$]$\\
+\em{(Overall risk - Susceptibility) | DK - UK} & $0.33$ & $785.4$ & $4.84$ & $\textit{p} < .001$ & $g = 0.30$ & $[0.13$, 0.47$]$\\
+\em{(Overall risk - Susceptibility) | DK - US} & $0.17$ & $784.2$ & $2.41$ & $\textit{p} = .085$ & $g = 0.14$ & $[-0.01$, 0.30$]$\\
+\em{(Overall risk - Susceptibility) | UK - US} & $-0.17$ & $784.5$ & $2.46$ & $\textit{p} = .085$ & $g = -0.16$ & $[-0.34$, 0.01$]$\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \textit{Note: } 
+\item Interaction contrasts computed as robust difference-of-differences via Yuen's trimmed-means test (20\% trimming) on subject-level difference scores; $p$-values Holm-adjusted across the nine interaction contrasts. Standardized effect sizes reported as Hedges' $g$ on raw difference scores, with 95\% CIs adjusted per comparison to match its Holm-corrected significance threshold.
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}

@@ -1,0 +1,135 @@
+\documentclass[english,man,floatsintext]{apa7}
+
+% Late night APA 7 reference fix!
+\usepackage{csquotes}
+\usepackage[backend=biber,style=apa,natbib=true]{biblatex}
+\DeclareLanguageMapping{english}{english-apa}
+\addbibresource{references.bib}
+
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{comment}
+\usepackage{tikz} % For stamping figure labels onto included PDF pages (e.g. Q-Q plots)
+
+\usepackage{amsmath} % For \textless
+\usepackage{cleveref} % For multi table referencing
+\usepackage{siunitx} % For number alignment
+\usepackage{pdflscape} 
+\usepackage{everypage}
+\usepackage{makecell}
+\usepackage{xr}
+\usepackage[table]{xcolor}
+
+\usepackage{setspace} % Enforce double spacing
+\usepackage{titlesec} % Control heading style/numbering (section, subsection, subsubsection)
+\usepackage{textcase} % provides \MakeTextUppercase (safer than \MakeUppercase)
+
+\hypersetup{hidelinks} 
+
+\geometry{margin=1in}
+\setcounter{secnumdepth}{3} % Ensure numbering goes down to subsubsections (1.1.1)
+
+% SECTION: bold + ALL CAPS + numbered like "3. RESULTS"
+\titleformat{\section}
+  {\bfseries}
+  {\thesection.}
+  {0.75em}
+  {\MakeTextUppercase}
+
+% UNNUMBERED \section headings (title/Abstract/Author note/etc.): centered, normal case
+% (prevents your manuscript title + Abstract heading from being forced to ALL CAPS)
+\titleformat{name=\section,numberless}
+  {\bfseries\centering}
+  {}
+  {0pt}
+  {}
+
+% SUBSECTION: bold + numbered like "3.1. Preliminary Data"
+\titleformat{\subsection}
+  {\bfseries}
+  {\thesubsection.}
+  {0.75em}
+  {}
+
+% SUBSUBSECTION: italic + numbered like "3.1.1. Surveys"
+\titleformat{\subsubsection}
+  {\itshape}
+  {\thesubsubsection.}
+  {0.75em}
+  {}
+
+% For fixing running header in Supplemental
+\usepackage{fancyhdr}
+
+\fancypagestyle{noheaderpagenum}{%
+  \fancyhf{}
+  \fancyhead[R]{\thepage} % page number top right
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\fancypagestyle{revisionletterstyle}{%
+  \fancyhf{}
+  \fancyfoot[C]{\thepage} % page number bottom center
+  \renewcommand{\headrulewidth}{0pt}
+  \renewcommand{\footrulewidth}{0pt}
+}
+
+\titlespacing*{name=\section,numberless}{0pt}{2.5ex plus 1ex minus .2ex}{2.25ex plus .4ex}
+
+% Fix apa7’s built-in labels
+\makeatletter
+\def\acksname{Author note} % Make sure "Author note" is not all uppercase
+\renewcommand{\abstractname}{Abstract}
+\makeatother
+
+\title{Public Risk Judgments of Endocrine-Disrupting Chemicals: Psychometric Structure, Exposure Pathways, and Cross-National Differences}
+\shorttitle{Public Risk Judgments of Endocrine-Disrupting Chemicals}
+
+\authorsnames[{1}, {1}, {2}, {1}]{{Nick Simonsen*}, {Aleksandr Pravednikov}, {Carl-Johan Lagerkvist}, {Sonja Perkovic},}
+
+\authorsaffiliations{{Department of Management, Aarhus University}, {Department of Economics, Swedish University of Agricultural Sciences}}
+
+\authornote{*Correspondence should be addressed to Nick Simonsen, Department of Management, Aarhus University, Aarhus, Denmark. E-mail: Nick.Simonsen@mgmt.au.dk}
+
+\abstract{
+Endocrine-disrupting chemicals (EDCs) are pervasive in everyday life and pose well-documented public health risks, yet little is known about how lay perceptions of EDC risks are structured and how they vary across exposure pathways and regulatory contexts. Drawing on the psychometric paradigm of risk perception, we conducted a large cross-national survey (N = 1,966) in Denmark, the United Kingdom, and the United States. Participants evaluated 18 EDC-related exposure scenarios across nine canonical risk attributes, ranked perceived health risks by exposure pathway (consumption, inhalation, dermal contact), and reported perceived severity, susceptibility, overall health risk, institutional trust, and sociodemographic characteristics.
+Across all three countries, risk perceptions exhibited a robust two-dimensional structure corresponding to affective-dread and cognitive-deliberate dimensions. However, the relative salience of these dimensions varied systematically: cognitive-deliberate cues accounted for more variance in Denmark, whereas affective-dread cues were more prominent in the UK and US. Perceived risk also varied consistently by exposure pathway, with consumption judged the most risky, followed by inhalation and dermal contact, a hierarchy that showed minimal cross-country variation.
+At the individual level, greater knowledge of EDCs consistently predicted higher perceived severity, while gender, age, income, parenthood, and institutional trust showed context- and outcome-specific associations.
+By extending the psychometric paradigm to chronic, diffuse chemical hazards embedded in everyday activities, this study demonstrates that EDC risk perceptions reflect shared affective-cognitive dimensions while remaining sensitive to exposure pathways and governance contexts, offering theoretically grounded insights for risk communication and policy design.
+}
+
+\keywords{endocrine-disrupting chemicals, risk perception, psychometric paradigm, cross-national comparison, risk communication}
+
+\begin{document}
+\doublespacing
+\raggedbottom
+\setlength{\parskip}{0pt}
+
+\maketitle
+
+\input{introduction}
+\input{methods}
+\input{results}
+\input{discussion}
+
+\newpage
+\printbibliography
+\newpage
+\input{supplemental}
+
+\newpage
+% \input{R1_reviewer_comments}
+\input{R2_reviewer_comments}
+
+% \newpage
+% \input{tables}
+
+\end{document}

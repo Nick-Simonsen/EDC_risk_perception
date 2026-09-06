@@ -1,0 +1,64 @@
+{\renewcommand{\arraystretch}{0.85}
+\begin{table}[H]
+\centering
+\captionsetup{font=small}
+\caption{Regression Results for Perceived Severity, Perceived Susceptibility, and Perceived Overall Risk in the US Sample}
+\label{table:regression_results_US}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\fontsize{7}{9}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{7.6cm}>{\raggedleft\arraybackslash}p{2.30cm}>{\raggedleft\arraybackslash}p{2.30cm}>{\raggedleft\arraybackslash}p{2.30cm}}
+\toprule
+Predictor & Severity & Susceptibility & Overall risk\\
+\midrule
+\em{Intercept} & -25.69* (11.35) & -8.84 (10.78) & -16.47 (10.81)\\
+\em{Institutional Trust} & 0.16** (0.05) & 0.04 (0.05) & 0.01 (0.06)\\
+\em{Knowledge} & 0.19* (0.08) & 0.12 (0.07) & 0.16* (0.08)\\
+\em{Familiarity} & -0.01 (0.07) & 0.11 (0.07) & 0.13 (0.07)\\
+\em{Age} & 0.01* (0.01) & 0.01 (0.01) & 0.01 (0.01)\\
+\addlinespace
+\em{Male} & -0.47*** (0.14) & -0.09 (0.13) & -0.40** (0.14)\\
+\em{Master's Degree} & 0.29 (0.20) & 0.36 (0.19) & 0.19 (0.19)\\
+\em{Ph.D.} & -0.12 (0.38) & 0.41 (0.36) & -0.17 (0.47)\\
+\em{Primary School} & -0.44 (0.50) & -0.07 (0.48) & -0.09 (0.45)\\
+\em{Secondary School} & -0.02 (0.19) & -0.05 (0.18) & -0.01 (0.19)\\
+\addlinespace
+\em{Vocational or Similar} & 0.45* (0.19) & 0.36* (0.18) & 0.36 (0.19)\\
+\em{Employment Status: A homemaker or stay-at-home parent} & 0.07 (0.28) & -0.09 (0.27) & -0.18 (0.22)\\
+\em{Employment Status: Retired} & 0.03 (0.24) & 0.13 (0.23) & 0.21 (0.23)\\
+\em{Employment Status: Student} & 0.06 (0.54) & -0.16 (0.51) & -0.06 (0.45)\\
+\em{Employment Status: Unemployed and looking for work} & -0.22 (0.30) & 0.44 (0.29) & 0.43 (0.34)\\
+\addlinespace
+\em{Employment Status: Working part-time} & -0.28 (0.19) & -0.01 (0.18) & 0.14 (0.19)\\
+\em{Geographical Residence: Midwest} & -0.28 (0.18) & -0.26 (0.17) & -0.17 (0.18)\\
+\em{Geographical Residence: Northeast} & -0.24 (0.17) & -0.07 (0.16) & -0.08 (0.16)\\
+\em{Geographical Residence: West} & -0.11 (0.21) & 0.10 (0.20) & 0.22 (0.21)\\
+\em{Has Children} & 0.37* (0.15) & 0.09 (0.14) & 0.18 (0.15)\\
+\addlinespace
+\em{Household Income: Less than \$25,000 per year} & 0.09 (0.26) & 0.02 (0.24) & 0.01 (0.28)\\
+\em{Household Income: \$25,000 - \$49,999 per year} & 0.18 (0.21) & 0.31 (0.20) & 0.39 (0.21)\\
+\em{Household Income: \$75,000 - \$99,999 per year} & 0.05 (0.21) & 0.14 (0.20) & 0.15 (0.20)\\
+\em{Household Income: \$100,000 - \$124,999 per year} & 0.09 (0.24) & 0.30 (0.23) & 0.26 (0.26)\\
+\em{Household Income: \$125,000 - \$190,000 per year} & 0.08 (0.23) & 0.29 (0.22) & 0.16 (0.23)\\
+\addlinespace
+\em{Household Income: More than \$190,000 per year} & -0.87** (0.30) & -0.58* (0.28) & -0.24 (0.26)\\
+\em{Perceived Health: Very bad} & 0.50 (0.91) & 0.38 (0.86) & 0.20 (0.73)\\
+\em{Perceived Health: Bad} & 0.07 (0.32) & 0.21 (0.30) & -0.07 (0.33)\\
+\em{Perceived Health: Moderate} & 0.17 (0.17) & 0.07 (0.16) & -0.03 (0.15)\\
+\em{Perceived Health: Very Good} & -0.11 (0.16) & -0.47** (0.16) & -0.16 (0.17)\\
+\addlinespace
+\em{$F$-statistic} & $\mathit{F}(29,\;542)=2.87$ & $\mathit{F}(29,\;542)=2.44$ & $\mathit{F}(29,\;542)=2.92$\\
+\em{Model $p$-value} & \textit{p} < .001 & \textit{p} < .001 & \textit{p} < .001\\
+\em{$R^2$} & 0.13 & 0.12 & 0.14\\
+\em{Adj. $R^2$} & 0.09 & 0.07 & 0.09\\
+\em{Cohen's \textit{f}\textsuperscript{2}} & 0.15 & 0.13 & 0.16\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \textit{Note: } 
+\item Parentheses represent standard errors (SEs). SEs are robust (HC1) for model(s): 3; standard SEs otherwise. Signif.: * (p < .05), ** (p < .01), *** (p < .001).\newline The reference category was female participants with a Bachelor's degree, working full-time, without children, and reporting good health. Country-specific reference categories for income and geographical residence were \$45,000--\$74,999 and South.
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}
+}

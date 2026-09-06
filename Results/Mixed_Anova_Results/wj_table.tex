@@ -1,0 +1,23 @@
+\begin{table}[H]
+\centering
+\caption{Welch-ADF Omnibus Test Results}
+\label{table:wj_table}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\fontsize{18}{20}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{8.5cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}>{\raggedleft\arraybackslash}p{3.2cm}}
+\toprule
+Effect & WJ & df1 & df2 & $p$\\
+\midrule
+\em{Country} & $14.50$ & $2$ & $2202$ & $\textit{p} < .001$\\
+\em{Category} & $419.02$ & $2$ & $2221$ & $\textit{p} < .001$\\
+\em{Country:Category} & $4.97$ & $4$ & $1705$ & $\textit{p} < .001$\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \textit{Note: } 
+\item Welch-ADF Omnibus Test Results (Trimmed Means, Heteroscedastic-robust).
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}

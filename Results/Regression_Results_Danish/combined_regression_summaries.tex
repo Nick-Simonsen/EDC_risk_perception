@@ -1,0 +1,67 @@
+{\renewcommand{\arraystretch}{0.85}
+\begin{table}[H]
+\centering
+\captionsetup{font=small}
+\caption{Regression Results for Perceived Severity, Perceived Susceptibility, and Perceived Overall Risk in the Danish Sample}
+\label{table:regression_results_Danish}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\fontsize{7}{9}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{7.6cm}>{\raggedleft\arraybackslash}p{2.30cm}>{\raggedleft\arraybackslash}p{2.30cm}>{\raggedleft\arraybackslash}p{2.30cm}}
+\toprule
+Predictor & Severity & Susceptibility & Overall risk\\
+\midrule
+\em{Intercept} & -28.45* (13.15) & -14.33 (11.67) & -30.13* (13.01)\\
+\em{Institutional Trust} & -0.09 (0.06) & -0.06 (0.05) & -0.13* (0.05)\\
+\em{Knowledge} & 0.25*** (0.07) & 0.14* (0.07) & 0.29*** (0.07)\\
+\em{Familiarity} & -0.14* (0.07) & 0.02 (0.06) & 0.05 (0.07)\\
+\em{Age} & 0.02* (0.01) & 0.01 (0.01) & 0.02* (0.01)\\
+\addlinespace
+\em{Male} & -0.09 (0.14) & -0.02 (0.13) & -0.09 (0.14)\\
+\em{Non-binary} & 3.25*** (0.30) & 0.23 (1.35) & 0.15 (1.51)\\
+\em{Master's Degree} & -0.68** (0.21) & 0.32 (0.19) & 0.24 (0.21)\\
+\em{Ph.D.} & 0.34 (0.65) & -0.44 (0.50) & -0.86 (0.55)\\
+\em{Primary School} & 0.26 (0.34) & -0.32 (0.31) & 0.01 (0.35)\\
+\addlinespace
+\em{Secondary School} & -0.20 (0.24) & -0.22 (0.21) & -0.10 (0.23)\\
+\em{Vocational or Similar} & -0.00 (0.17) & 0.02 (0.15) & 0.16 (0.17)\\
+\em{Employment Status: A homemaker or stay-at-home parent} & -0.57* (0.24) & -1.19 (0.79) & 0.39 (0.88)\\
+\em{Employment Status: Retired} & 0.24 (0.24) & 0.22 (0.21) & 0.26 (0.23)\\
+\em{Employment Status: Student} & -0.55 (0.34) & -0.38 (0.27) & 0.07 (0.30)\\
+\addlinespace
+\em{Employment Status: Unemployed and looking for work} & 0.03 (0.47) & -0.17 (0.46) & 0.22 (0.52)\\
+\em{Employment Status: Working part-time} & 0.09 (0.21) & 0.24 (0.21) & 0.23 (0.23)\\
+\em{Geographical Residence: Region of Central Jutland} & -0.06 (0.21) & -0.41* (0.19) & 0.02 (0.22)\\
+\em{Geographical Residence: Region of Northern Jutland} & -0.13 (0.24) & -0.10 (0.26) & -0.40 (0.29)\\
+\em{Geographical Residence: Region of Southern Jutland} & -0.20 (0.22) & -0.31 (0.20) & -0.17 (0.23)\\
+\addlinespace
+\em{Geographical Residence: Region of the Capital} & -0.10 (0.20) & -0.41* (0.19) & -0.25 (0.21)\\
+\em{Has Children} & -0.35* (0.18) & -0.19 (0.16) & -0.13 (0.18)\\
+\em{Household Income: Less than 185,000 DKK per year} & 0.53 (0.38) & 0.68* (0.31) & -0.17 (0.35)\\
+\em{Household Income: 185,000 - 374,999 DKK per year} & 0.22 (0.20) & 0.23 (0.21) & 0.16 (0.23)\\
+\em{Household Income: 375,000 - 564,999 DKK per year} & 0.12 (0.21) & 0.09 (0.20) & -0.22 (0.23)\\
+\addlinespace
+\em{Household Income: 750,000 - 999,999 DKK per year} & -0.17 (0.22) & 0.09 (0.23) & -0.06 (0.25)\\
+\em{Household Income: 1,000,000 - 1,499,999 DKK per year} & -0.17 (0.27) & -0.28 (0.25) & -0.19 (0.28)\\
+\em{Household Income: More than 1,500,000 DKK per year} & 0.39 (0.48) & -0.22 (0.40) & -0.15 (0.45)\\
+\em{Perceived Health: Very bad} & 0.43 (0.45) & 0.53 (0.78) & 0.90 (0.87)\\
+\em{Perceived Health: Bad} & -0.03 (0.33) & 0.00 (0.26) & -0.02 (0.28)\\
+\addlinespace
+\em{Perceived Health: Moderate} & 0.07 (0.17) & 0.17 (0.15) & 0.08 (0.17)\\
+\em{Perceived Health: Very Good} & -0.38* (0.17) & -0.02 (0.16) & 0.03 (0.18)\\
+\em{$F$-statistic} & $\mathit{F}(31,\;492)=2.30$ & $\mathit{F}(31,\;492)=1.50$ & $\mathit{F}(31,\;492)=2.48$\\
+\em{Model $p$-value} & \textit{p} < .001 & \textit{p} < .05 & \textit{p} < .001\\
+\em{$R^2$} & 0.13 & 0.09 & 0.14\\
+\addlinespace
+\em{Adj. $R^2$} & 0.07 & 0.03 & 0.08\\
+\em{Cohen's \textit{f}\textsuperscript{2}} & 0.14 & 0.09 & 0.16\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \textit{Note: } 
+\item Parentheses represent standard errors (SEs). SEs are robust (HC1) for model(s): 1; standard SEs otherwise. Signif.: * (p < .05), ** (p < .01), *** (p < .001).\newline The reference category was female participants with a Bachelor's degree, working full-time, without children, and reporting good health. Country-specific reference categories for income and geographical residence were 565,000--749,999 DKK and the Region of Zealand.
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}
+}
