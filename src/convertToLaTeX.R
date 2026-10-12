@@ -289,8 +289,7 @@ formatHealthDescriptivesToLaTeX <- function(df,
   if (!all(c("Category", "Rating") %in% names(df))) {
     grouping <- intersect(names(df), c("Subject", "Country"))
     dv_cols <- setdiff(names(df)[vapply(df, is.numeric, logical(1))], grouping)
-    if (length(dv_cols) == 0)
-      stop("Could not infer DV columns. Ensure numeric DVs are present (e.g., Severity/Susceptibility/Overall risk).")
+    
     df <- df %>%
       dplyr::select(dplyr::any_of(c("Subject", "Country")), dplyr::all_of(dv_cols)) %>%
       tidyr::pivot_longer(cols = dplyr::all_of(dv_cols),
@@ -808,7 +807,7 @@ parse_health_order <- function(x) {
 formatRegressionResultsToLaTeX <- function(regression_results,
                                            output_dir,
                                            country,
-                                           model_labels = c("Severity", "Susceptibility", "Overall risk")) {
+                                           model_labels = c("Susceptibility", "Severity", "Overall risk")) {
     require(dplyr)
     require(purrr)
     require(kableExtra)
@@ -945,7 +944,7 @@ formatRegressionResultsToLaTeX <- function(regression_results,
         display,
         format      = "latex",
         booktabs    = TRUE,
-        caption     = sprintf("Regression Results for Perceived Severity, Perceived Susceptibility, and Perceived Overall Risk in the %s Sample", country),
+        caption     = sprintf("Regression Results for Perceived Susceptibility, Perceived Severity, and Perceived Overall Risk in the %s Sample", country),
         align       = c("l", rep("r", ncol(display) - 1)),
         escape      = FALSE
     ) %>%
@@ -1395,7 +1394,7 @@ formatConsistencyHealthToLaTeX <- function(results,
 
     # Wilcoxon robustness check
     agree_line <- paste0(
-        "susceptibility $-$ severity: mean diff $=", sprintf("%.2f", as.numeric(results$mean_diff[1])), "$, ",
+        "severity $-$ susceptibility: mean diff $=", sprintf("%.2f", as.numeric(results$mean_diff[1])), "$, ",
         "Wilcoxon $V=", format(as.numeric(results$wilcoxon_V[1]), scientific = FALSE), "$, ",
         format_p_value(results$wilcoxon_p[1], inline = TRUE), "; ",
         "$d_z=", sprintf("%.2f", as.numeric(results$cohens_dz[1])),

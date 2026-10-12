@@ -11,9 +11,9 @@ library(stringr)
 library(purrr)
 library(dplyr) # Re-attach after caret (which loads plyr and masks dplyr functions)
 
-source("convertToLaTeX.R")
-source("plots.R")
-source("helperFuncs.R")
+source("src/convertToLaTeX.R")
+source("src/plots.R")
+source("src/helperFuncs.R")
 
 options(warn = -1) # Suppress warnings
 
@@ -289,8 +289,8 @@ multipleRegression <- function(df, demographics_df, country, output_dir = './Res
     require(lmtest)
 
     # Outcome variables
-    perceived_severity <- df %>% select(contains("Q6_1ED_1")) %>% mutate(across(everything(), as.numeric)) %>% unlist()
-    perceived_susceptibility <- df %>% select(contains("Q6_1ED_2")) %>% mutate(across(everything(), as.numeric)) %>% unlist()
+    perceived_susceptibility <- df %>% select(contains("Q6_1ED_1")) %>% mutate(across(everything(), as.numeric)) %>% unlist() # Likelihood of becoming ill
+    perceived_severity <- df %>% select(contains("Q6_1ED_2")) %>% mutate(across(everything(), as.numeric)) %>% unlist() # Seriousness of the illness
     perceived_exposure <- df %>% select(contains("Q6_1ED_3")) %>% mutate(across(everything(), as.numeric)) %>% unlist()
 
     # Predictor variables
@@ -400,13 +400,13 @@ multipleRegression <- function(df, demographics_df, country, output_dir = './Res
         return(results)
     }
     
-    severity_results <- fitModel(perceived_severity, cbind(social_trust, knowledge_level, familiarity_level, age, gender, educational_level, employment_status, geographical_residence, annual_household_income, number_children, perceived_health))
     susceptibility_results <- fitModel(perceived_susceptibility, cbind(social_trust, knowledge_level, familiarity_level, age, gender, educational_level, employment_status, geographical_residence, annual_household_income, number_children, perceived_health))
+    severity_results <- fitModel(perceived_severity, cbind(social_trust, knowledge_level, familiarity_level, age, gender, educational_level, employment_status, geographical_residence, annual_household_income, number_children, perceived_health))
     exposure_results <- fitModel(perceived_exposure, cbind(social_trust, knowledge_level, familiarity_level, age, gender, educational_level, employment_status, geographical_residence, annual_household_income, number_children, perceived_health))
 
     regression_results <- list(
-        severity_results = severity_results,
         susceptibility_results = susceptibility_results,
+        severity_results = severity_results,
         exposure_results = exposure_results
     )
 
@@ -607,17 +607,17 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
         df <- data_list[[i]]
         country <- country_vec[[i]]
 
-        severity <- df %>% dplyr::select(contains("Q6_1ED_1")) %>% mutate(across(everything(), as.numeric))
-        susceptibility <- df %>% dplyr::select(contains("Q6_1ED_2")) %>% mutate(across(everything(), as.numeric))
+        susceptibility <- df %>% dplyr::select(contains("Q6_1ED_1")) %>% mutate(across(everything(), as.numeric))
+        severity <- df %>% dplyr::select(contains("Q6_1ED_2")) %>% mutate(across(everything(), as.numeric))
         exposure <- df %>% dplyr::select(contains("Q6_1ED_3")) %>% mutate(across(everything(), as.numeric))
 
-        n <- nrow(severity) # This is arbitrary but since it's within subject ratings all vars will have same length
+        n <- nrow(susceptibility) # This is arbitrary but since it's within subject ratings all vars will have same length
         subject_ids <- paste0(country, "_", seq_len(n))
 
         bind_rows(
-            severity %>% mutate(Subject = subject_ids, Category = "Severity", Country = country) %>%
-                pivot_longer(-c(Subject, Category, Country), values_to = "Rating") %>% dplyr::select(-name),
             susceptibility %>% mutate(Subject = subject_ids, Category = "Susceptibility", Country = country) %>%
+                pivot_longer(-c(Subject, Category, Country), values_to = "Rating") %>% dplyr::select(-name),
+            severity %>% mutate(Subject = subject_ids, Category = "Severity", Country = country) %>%
                 pivot_longer(-c(Subject, Category, Country), values_to = "Rating") %>% dplyr::select(-name),
             exposure %>% mutate(Subject = subject_ids, Category = "Overall risk", Country = country) %>%
                 pivot_longer(-c(Subject, Category, Country), values_to = "Rating") %>% dplyr::select(-name)
@@ -625,7 +625,7 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
     }) %>% 
     bind_rows() %>% 
     mutate(
-        Category = factor(Category, levels = c("Severity", "Susceptibility", "Overall risk")),
+        Category = factor(Category, levels = c("Susceptibility", "Severity", "Overall risk")),
         Country = factor(Country, levels = c("DK", "UK", "US")),
         Subject = factor(Subject)
     )
@@ -794,15 +794,15 @@ consistencyHealth <- function(df, country, output_dir = "./Results") {
     require(polycor)
     require(DescTools)
 
-    sev  <- df %>% dplyr::select(dplyr::contains("Q6_1ED_1")) %>% mutate(across(everything(), as.numeric)) %>% unlist()
-    susc <- df %>% dplyr::select(dplyr::contains("Q6_1ED_2")) %>% mutate(across(everything(), as.numeric)) %>% unlist()
-    dat  <- tibble::tibble(Severity = sev, Susceptibility = susc) %>% tidyr::drop_na()
+    susc <- df %>% dplyr::select(dplyr::contains("Q6_1ED_1")) %>% mutate(across(everything(), as.numeric)) %>% unlist()
+    sev  <- df %>% dplyr::select(dplyr::contains("Q6_1ED_2")) %>% mutate(across(everything(), as.numeric)) %>% unlist()
+    dat  <- tibble::tibble(Susceptibility = susc, Severity = sev) %>% tidyr::drop_na()
 
-    sev_ord <- ordered(dat$Severity, levels = 1:7)
     susc_ord <- ordered(dat$Susceptibility, levels = 1:7)
+    sev_ord <- ordered(dat$Severity, levels = 1:7)
 
     # Polychoric correlation
-    pc_obj <- suppressWarnings(polycor::polychor(sev_ord, susc_ord, std.err = TRUE))
+    pc_obj <- suppressWarnings(polycor::polychor(susc_ord, sev_ord, std.err = TRUE))
     pc_est <- pc_obj$rho
     cov_matrix <- vcov(pc_obj)
     pc_se <- sqrt(diag(cov_matrix))
@@ -811,7 +811,7 @@ consistencyHealth <- function(df, country, output_dir = "./Results") {
     pc_CI <- c(pc_est - z * pc_se, pc_est + z * pc_se)
 
     # Spearman correlation
-    sp <- suppressWarnings(stats::cor.test(as.numeric(sev_ord), as.numeric(susc_ord),
+    sp <- suppressWarnings(stats::cor.test(as.numeric(susc_ord), as.numeric(sev_ord),
                           method = "spearman", exact = FALSE))
 
     sp_CI <- unname(sp$conf.int)
@@ -819,7 +819,7 @@ consistencyHealth <- function(df, country, output_dir = "./Results") {
     sp_lo <- sp_CI[1]; sp_hi <- sp_CI[2]
 
     # Agreement (paired differences)
-    diff <- as.numeric(susc_ord) - as.numeric(sev_ord)
+    diff <- as.numeric(sev_ord) - as.numeric(susc_ord)
     wil <- suppressWarnings(stats::wilcox.test(diff, mu = 0, exact = FALSE, correct = TRUE))
     N <- length(diff)
     z_w <- stats::qnorm(wil$p.value / 2, lower.tail = FALSE) * sign(stats::median(diff, na.rm = TRUE))
@@ -831,11 +831,11 @@ consistencyHealth <- function(df, country, output_dir = "./Results") {
     if (is.null(sp$conf.int)) {
         set.seed(123)
 
-        n <- length(sev_ord)
+        n <- length(susc_ord)
         B <- 2000L
         s_boot <- replicate(B, {
             idx <- sample.int(n, replace = TRUE)
-            cor(as.numeric(sev_ord[idx]), as.numeric(susc_ord[idx]), method = "spearman")
+            cor(as.numeric(susc_ord[idx]), as.numeric(sev_ord[idx]), method = "spearman")
         })
         sp_CI <- stats::quantile(s_boot, probs = c(0.025, 0.975), na.rm = TRUE)
         sp_lo <- as.numeric(sp_CI[1]); sp_hi <- as.numeric(sp_CI[2])
@@ -1196,20 +1196,20 @@ formatCombinedANOVADescriptivesToLaTeX(
 
 UK_regression <- multipleRegression(UK_likert_data, UK_demographics_data, "UK")
 DK_regression <- multipleRegression(DK_likert_data, DK_demographics_data, "Danish")
-US_regression <- multipleRegression(US_likert_data, US_demographics_data, "US") # Severity model ends up getting log transformed
+US_regression <- multipleRegression(US_likert_data, US_demographics_data, "US") # Susceptibility model ends up getting log transformed
 
 # Inspect regression models
+# UK_regression$susceptibility_results$log_transform_applied
 # UK_regression$severity_results$log_transform_applied
 # UK_regression$exposure_results$log_transform_applied
-# UK_regression$susceptibility_results$log_transform_applied
 
+# DK_regression$susceptibility_results$log_transform_applied
 # DK_regression$severity_results$log_transform_applied
 # DK_regression$exposure_results$log_transform_applied
-# DK_regression$susceptibility_results$log_transform_applied
 
-# US_regression$severity_results$log_transform_applied # Only one that returns TRUE
+# US_regression$susceptibility_results$log_transform_applied # Only one that returns TRUE
+# US_regression$severity_results$log_transform_applied
 # US_regression$exposure_results$log_transform_applied
-# US_regression$susceptibility_results$log_transform_applied
 
 createCombinedTable(table_list = list(UK_PCA, US_PCA, DK_PCA),
                     country = c("UK", "US", "DK"),
