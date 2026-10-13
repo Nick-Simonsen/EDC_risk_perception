@@ -494,7 +494,7 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
             dplyr::rename(CI_low = conf.low, CI_high = conf.high, t.ratio = statistic, p.value = p.adj)
 
         # Hedges g for GH results
-        g_stats <- effectsize::t_to_d(t = gh_by_cat$t.ratio, df = gh_by_cat$df, ci = 0.95, hedges.correction = TRUE)
+        g_stats <- effectsize::t_to_d(t = sign(gh_by_cat$estimate) * gh_by_cat$t.ratio, df = gh_by_cat$df, ci = 0.95, hedges.correction = TRUE)
         by_category <- bind_cols(
             gh_by_cat %>% tibble(Hedges_g = g_stats$d, g_CI_low = g_stats$CI_low, g_CI_high = g_stats$CI_high)
         ) %>%
@@ -556,21 +556,12 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
 
         p_raw  <- vapply(interaction_raw, `[[`, numeric(1), "p.raw")
         p_holm <- p.adjust(p_raw, method = "holm")
-        holm_alpha <- pmin(0.05 * p_raw / p_holm, 0.05) # Per-row alpha implied by Holm adjustment already applied to this row's p-value (p_holm = M_i * p_raw for an effective multiplier M_i >= 1
 
         interaction_tbl <- purrr::map_dfr(seq_along(interaction_raw), function(i) {
             row <- interaction_raw[[i]]
 
-            es <- effectsize::cohens_d(row$xi_diff, row$xj_diff, hedges.correction = TRUE)
-            g  <- unname(es$Cohens_d[1])
-
-            # Reconstruct CI implied by Yuen's own t-statistic (diff, test, df) at row-specific Holm alpha, (then rescale it onto Hedges' g units)
-            se_diff  <- row$estimate / row$t.ratio
-            crit     <- qt(1 - holm_alpha[i] / 2, row$df)
-            ci_lo    <- row$estimate - crit * se_diff
-            ci_hi    <- row$estimate + crit * se_diff
-            scale    <- g / row$estimate
-            ci_g     <- sort(c(ci_lo, ci_hi) * scale)
+            es <- effectsize::hedges_g(row$xi_diff, row$xj_diff)
+            g  <- unname(es$Hedges_g[1])
 
             tibble(
                 contrast = row$contrast,
@@ -578,14 +569,12 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
                 df       = row$df,
                 t.ratio  = row$t.ratio,
                 p.value  = p_holm[i],
-                Cohens_d = g,
-                CI_low   = ci_g[1],
-                CI_high  = ci_g[2]
+                Cohens_d = g
             )
         })
 
         interaction_pw <- interaction_tbl %>%
-            dplyr::select(contrast, estimate, df, t.ratio, p.value, Cohens_d, CI_low, CI_high)
+            dplyr::select(contrast, estimate, df, t.ratio, p.value, Cohens_d)
 
         list(
             interaction_pw  = interaction_pw,
@@ -669,7 +658,7 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
 
     # Robust omnibus for both within and interaction (we will report these seperately in manuscript *IF* the levene is sig.)
     wj <- welchADF.test(
-        formula     = Rating ~ Country * Category,
+        formula     = Rating ~ Country * Category + (Category | Subject),
         data        = combined_data,
         contrast    = "omnibus",
         trimming    = TRUE # Trimmed means + Winsorized variances
@@ -678,6 +667,7 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
     # Construct a tibble from the wj output
     wj_txt <- capture.output(summary(wj))
     rows <- grep("^(Country|Category)", wj_txt, value = TRUE)
+    rows <- gsub("\\s+:\\s+", ":", rows)
     mat <- do.call(rbind, strsplit(trimws(rows), "\\s+"))
     df <- as.data.frame(mat, stringsAsFactors = FALSE)[, 1:5]
     names(df) <- c("Effect", "stat", "df1", "df2", "p")

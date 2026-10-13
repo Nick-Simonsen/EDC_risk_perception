@@ -105,7 +105,7 @@ We adapted the R-index proposed by \citet{o1992understanding} and previously app
 R_{i,j} = \frac{A + B}{A + 2B + C} \times 100,
 \end{equation}
 
-where $A$ is the total number of times scenario $i$ is ranked higher than scenario $j$, $B$ is the number of ties between $i$ and $j$, and $C$ is the total number of times scenario $j$ is ranked higher than scenario $i$. These quantities are calculated as:
+where $A$ is the total number of times scenario $i$ is ranked higher than scenario $j$, $B$ is half the number of ties between $i$ and $j$, and $C$ is the total number of times scenario $j$ is ranked higher than scenario $i$. These quantities are calculated as:
 
 \begin{align}
 A &= a_{1}(b_{2} + \cdots + z_{2}) + b_{1}(c_{2} + \cdots + z_{2}) + \cdots + w_{1} z_{2}, \\
@@ -125,7 +125,7 @@ The resulting R-index rankings were highly consistent across the US, Denmark, an
 
 When model diagnostics indicated nonlinearity, outcomes were log-transformed prior to estimation. This applied only to perceived susceptibility in the US sample. When the Breusch-Pagan test indicated heteroscedasticity, models were estimated with heteroscedasticity-consistent robust standard errors using HC covariance estimation \citep{hayes2007using,long2000using,wilcox2011introduction}.
 
-Shapiro-Wilk tests indicated deviations from normality for perceived susceptibility in the Danish (\input{Results/Regression_Results_Danish/Susceptibility_shapiro_test}) and UK samples (\input{Results/Regression_Results_UK/Susceptibility_shapiro_test}), and for all three outcomes in the US sample (overall health risk: \input{Results/Regression_Results_US/Overall risk_shapiro_test}; susceptibility: \input{Results/Regression_Results_US/Susceptibility_shapiro_test}; severity: \input{Results/Regression_Results_US/Severity_shapiro_test}). 
+Shapiro-Wilk tests indicated deviations from normality for perceived susceptibility in the Danish (\input{Results/Regression_Results_Danish/Susceptibility_shapiro_test}) and UK samples (\input{Results/Regression_Results_UK/Susceptibility_shapiro_test}), and for all three outcomes in the US sample (overall health risk: \input{Results/Regression_Results_US/Overall risk_shapiro_test}; susceptibility: \input{Results/Regression_Results_US/Susceptibility_shapiro_test}; severity: \input{Results/Regression_Results_US/Severity_shapiro_test}). Deviations from residual normality were also detected for perceived severity in the UK sample (\input{Results/Regression_Results_UK/Severity_shapiro_test}).
 
 Because violations of residual normality are of limited concern in large-sample linear regression \citep{knief2021violating,gelman2007data}, these deviations were not considered problematic. Visual inspection of Q-Q plots (Plots \ref{fig:qq_us}-\ref{fig:qq_uk}) indicated approximate normality with only minor deviations in the distribution tails, a pattern that is known to inflate Shapiro-Wilk sensitivity.
 
@@ -179,7 +179,7 @@ As an exploratory analysis, we examined whether perceived overall health risk, p
 
 Because Levene's test indicated heterogeneity of variance, we supplemented the conventional mixed-design ANOVA with heteroscedasticity-robust methods. Following recommendations by \cite{delacre2019taking}, we implemented a Welch-adjusted approximate degrees of freedom (Welch-ADF) omnibus test using 20\% trimmed means and Winsorized variances, which provides improved control of Type I error rates under variance heterogeneity.
 
-The mixed ANOVA showed a statistically significant main effect of Category (Welch on subject means: \input{Results/Mixed_Anova_Results/category_main_effect}), a statistically significant main effect of Country (\input{Results/Mixed_Anova_Results/country_main_effect}), and a statistically significant Category $\times$ Country interaction (\input{Results/Mixed_Anova_Results/interaction_main_effect}). Welch-ADF omnibus tests corroborated these findings (see Table \ref{table:wj_table}).
+The mixed ANOVA showed a statistically significant main effect of Category (\input{Results/Mixed_Anova_Results/category_main_effect}), a statistically significant main effect of Country (Welch on subject means: \input{Results/Mixed_Anova_Results/country_main_effect}), and a statistically significant Category $\times$ Country interaction (\input{Results/Mixed_Anova_Results/interaction_main_effect}). Welch-ADF omnibus tests corroborated these findings (see Table \ref{table:wj_table}).
 
 \input{Results/Mixed_Anova_Results/wj_table}
 
@@ -191,7 +191,7 @@ Post hoc contrasts examining between-country differences within each category ar
 
 To further evaluate cross-country differences in category effects while reducing sensitivity to outliers and variance heterogeneity, we used Yuen's trimmed-mean test on subject-level difference scores \citep{yuen1974two}. This procedure replaces sample means with 20\% trimmed means and uses Winsorized variances, yielding robust inference under skewed distributions and unequal variances. Simulation studies show that this approach maintains accurate Type I error rates while retaining good statistical power \citep{wilcox2017modern}.
 
-Results of Yuen's trimmed-mean interaction contrasts are reported in Table \ref{table:ipw_table}. All post hoc contrasts were adjusted for multiple comparisons using the Holm correction \citep{holm1979simple}, which controls the familywise error rate more efficiently than the Bonferroni procedure.
+Results of Yuen's trimmed-mean interaction contrasts are reported in Table \ref{table:ipw_table}. The nine interaction contrasts were adjusted for multiple comparisons using the Holm correction \citep{holm1979simple}, which controls the familywise error rate more efficiently than the Bonferroni procedure.
 
 \input{Results/Mixed_Anova_Results/ipw_table}
 

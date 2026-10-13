@@ -1329,7 +1329,7 @@ formatMixedANOVAToLaTeX <- function(results, contrasts_as_tables, output_dir) {
                 `Effect size` = paste0("$d_z = ", sprintf("%.2f$", Cohens_d)),
                 `95\\%\\;CI` = paste0("$[", sprintf("%.2f$", CI_low), ", ", sprintf("%.2f$", CI_high), "]$")
             )
-        note_byctry <- "Within-country (paired) Category contrasts (20% trimmed means; FWER controlled). Effect sizes reported as paired $d_z$ with 95\\% CI."
+        note_byctry <- "Within-country (paired) Category contrasts (20% trimmed means; FWER controlled). Effect sizes reported as paired $d_z$; 95\\% CIs refer to $\\\\Delta M$."
     } else {
         byctry_fmt <- byctry %>%
             transmute(
@@ -1352,13 +1352,13 @@ formatMixedANOVAToLaTeX <- function(results, contrasts_as_tables, output_dir) {
             `$df$` = sprintf("$%s$", fmt_df(as.numeric(df))),
             `$t$`  = sprintf("$%.2f$", t.ratio),
             `$p$`  = vapply(p.value, format_p_value, character(1)),
-            `Effect size` = paste0("$g = ", sprintf("%.2f$", Cohens_d)),
-            `95\\%\\;CI` = paste0("$[", sprintf("%.2f$", CI_low), ", ", sprintf("%.2f$", CI_high), "]$")
+            `Effect size` = paste0("$g = ", sprintf("%.2f$", Cohens_d))
         )
-        
+
     if (identical(inter_flag, "yuen_trimmed")) {
-        note_ipw <- "Interaction contrasts computed as robust difference-of-differences via Yuen's trimmed-means test (20\\% trimming) on subject-level difference scores; $p$-values Holm-adjusted across the nine interaction contrasts. Standardized effect sizes reported as Hedges' $g$ on raw difference scores, with 95\\% CIs adjusted per comparison to match its Holm-corrected significance threshold."
+        note_ipw <- "Interaction contrasts computed as robust difference-of-differences via Yuen's trimmed-means test (20\\% trimming) on subject-level difference scores; $p$-values Holm-adjusted across the nine interaction contrasts. Standardized effect sizes reported as Hedges' $g$ on raw difference scores."
     } else {
+        ipw_fmt$`95\\%\\;CI` <- paste0("$[", sprintf("%.2f$", ipw$CI_low), ", ", sprintf("%.2f$", ipw$CI_high), "]$")
         note_ipw <- "Interaction pairwise contrasts (Holm-adjusted)."
     }
     
