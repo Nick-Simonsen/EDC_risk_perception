@@ -1003,6 +1003,22 @@ formatRegressionResultsToLaTeX <- function(regression_results,
         )
         writeLatexSnippet(overall_model_sentence, file.path(output_dir, paste0(label, "_overall_model.tex")))
 
+        # If the outcome was log-transformed, also report the fit statistics of the untransformed model
+        if (!is.null(results$untransformed_fit)) {
+            untransformed_fit    <- results$untransformed_fit
+            untransformed_f_info <- untransformed_fit$f_statistic_info
+            untransformed_df1    <- as.integer(untransformed_f_info[2])
+            untransformed_df2    <- as.integer(untransformed_f_info[3])
+            untransformed_p      <- pf(untransformed_f_info[1], untransformed_df1, untransformed_df2, lower.tail = FALSE)
+
+            untransformed_model_sentence <- sprintf(
+                "$\\mathit{F}(%d,\\;%d) = %.2f,\\; %s,\\; R^2 = %.2f,\\; R^2_{\\mathrm{adj}} = %.2f,\\; f^2 = %.2f$",
+                untransformed_df1, untransformed_df2, untransformed_f_info[1], format_p_value(untransformed_p),
+                untransformed_fit$r_squared, untransformed_fit$adj_r_squared, untransformed_fit$effect_size
+            )
+            writeLatexSnippet(untransformed_model_sentence, file.path(output_dir, paste0(label, "_untransformed_overall_model.tex")))
+        }
+
         coefficients <- results$coefficients_for_snippets
         significant_coefficients <- coefficients[coefficients[, 4] <= 0.05, , drop = FALSE]
 

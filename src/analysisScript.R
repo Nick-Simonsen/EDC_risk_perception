@@ -349,9 +349,18 @@ multipleRegression <- function(df, demographics_df, country, output_dir = './Res
         log_transform_applied <- FALSE
         robust_ses_calculated <- FALSE
         robust_se_values <- c(NULL)
+        untransformed_fit <- NULL
         model_coefficients_summary <- summary(regression_model)$coefficients # Default to standard summary
 
         if (diagnostics$reset_test$p.value < 0.05) {
+            # Keep the fit statistics of the untransformed model before it is replaced by the log-transformed model
+            untransformed_fit <- list(
+                f_statistic_info = diagnostics$f_statistic_info,
+                r_squared        = diagnostics$r_squared,
+                adj_r_squared    = summary(regression_model)$adj.r.squared,
+                effect_size      = diagnostics$r_squared / (1 - diagnostics$r_squared)
+            )
+
             if (any(outcome <= 0)) {
                 shift <- abs(min(outcome)) + 1 # If the outcome contains non-positive values, shift them.
                 outcome_shifted <- outcome + shift
@@ -365,6 +374,7 @@ multipleRegression <- function(df, demographics_df, country, output_dir = './Res
             regression_model <- lm(outcome_transformed ~ ., data = data_trans, na.action = na.exclude)
             log_transform_applied <- TRUE
             diagnostics <- getDiagnostics(regression_model)
+            model_coefficients_summary <- summary(regression_model)$coefficients # Update to be the log-transformed model coefficient summary
         }
 
         if (!is.na(diagnostics$bp_test$p.value) && diagnostics$bp_test$p.value < 0.05) {
@@ -384,7 +394,8 @@ multipleRegression <- function(df, demographics_df, country, output_dir = './Res
             original_model            = regression_model, # Always store the original lm object
             coefficients_for_snippets = model_coefficients_summary, # Use this for individual tex files (might be robust)
             log_transform_applied     = log_transform_applied,
-            robust_se_values          = robust_se_values, # Store robust SEs if calculated, otherwise NULL
+            untransformed_fit         = untransformed_fit, # Fit statistics of the untransformed model if a log-transformation was applied, otherwise NULL
+            robust_se_values        = robust_se_values, # Store robust SEs if calculated, otherwise NULL
             reset_test                = diagnostics$reset_test,
             vif                       = diagnostics$vif,
             r_squared                 = r_squared,
