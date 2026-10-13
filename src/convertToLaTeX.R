@@ -1117,7 +1117,7 @@ createRIndexTable <- function(table_list,
     header_top <- c(" " = 2)
     for (ctry in country_codes) {header_top <- c(header_top, setNames(2, ctry))}
 
-    col_sub <- rep(c("Choice Prob.", "R-index"), length(table_list))
+    col_sub <- rep(c("Choice Prob.", "Rank"), length(table_list))
 
     latex_tbl <- knitr::kable(
         wide_tbl,
@@ -1297,12 +1297,12 @@ formatMixedANOVAToLaTeX <- function(results, contrasts_as_tables, output_dir) {
                 Contrast = tex_escape(contrast),
                 `\\(\\Delta M\\)` = sprintf("$%.2f$", safe_col(., "estimate")),
                 `$p$` = vapply(safe_col(., "p.value", safe_col(., "p.adj")), format_p_value, character(1)),
-                `Effect size` = if (have_g) paste0("$g = ", sprintf("%.2f", .data[[g_col]]), "$") else "--",
-                `g\\;95\\%\\;CI` = if (!is.na(g_lo)) paste0("$[", sprintf("%.2f", .data[[g_lo]]), ", ",
+                `Effect size` = if (have_g) paste0("$d = ", sprintf("%.2f", .data[[g_col]]), "$") else "--",
+                `d\\;95\\%\\;CI` = if (!is.na(g_lo)) paste0("$[", sprintf("%.2f", .data[[g_lo]]), ", ",
                                                         sprintf("%.2f", .data[[g_hi]]), "]$") else "--",
                 `Diff\\;95\\%\\;CI` = paste0("$[", sprintf("%.2f", CI_low), ", ", sprintf("%.2f", CI_high), "]$")
             )
-        note_bycat <- "Between-country contrasts within each Category using Games-Howell (heteroscedastic). Mean-difference CI shown under “Diff 95\\% CI”. Effect sizes reported as Hedges' g with CI."
+        note_bycat <- "Between-country contrasts within each Category using Games-Howell (heteroscedastic). Mean-difference CI shown under “Diff 95\\% CI”. Effect sizes reported as Cohen's d (approximated from the Welch t statistics) with CI."
     } else {
         bycat_fmt <- bycat %>%
             transmute(
@@ -1356,6 +1356,7 @@ formatMixedANOVAToLaTeX <- function(results, contrasts_as_tables, output_dir) {
         )
 
     if (identical(inter_flag, "yuen_trimmed")) {
+        names(ipw_fmt)[names(ipw_fmt) == "$t$"] <- "$|t|$"
         note_ipw <- "Interaction contrasts computed as robust difference-of-differences via Yuen's trimmed-means test (20\\% trimming) on subject-level difference scores; $p$-values Holm-adjusted across the nine interaction contrasts. Standardized effect sizes reported as Hedges' $g$ on raw difference scores."
     } else {
         ipw_fmt$`95\\%\\;CI` <- paste0("$[", sprintf("%.2f$", ipw$CI_low), ", ", sprintf("%.2f$", ipw$CI_high), "]$")

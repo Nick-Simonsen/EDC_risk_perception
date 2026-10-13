@@ -493,8 +493,8 @@ exploratoryMixedRMANOVA <- function(data_list, country_names, contrasts_as_table
                    estimate, conf.low, conf.high, statistic, df, p.adj) %>%
             dplyr::rename(CI_low = conf.low, CI_high = conf.high, t.ratio = statistic, p.value = p.adj)
 
-        # Hedges g for GH results
-        g_stats <- effectsize::t_to_d(t = sign(gh_by_cat$estimate) * gh_by_cat$t.ratio, df = gh_by_cat$df, ci = 0.95, hedges.correction = TRUE)
+        # Cohen's d (approximated from Welch t) for GH results
+        g_stats <- effectsize::t_to_d(t = sign(gh_by_cat$estimate) * gh_by_cat$t.ratio, df = gh_by_cat$df, ci = 0.95)
         by_category <- bind_cols(
             gh_by_cat %>% tibble(Hedges_g = g_stats$d, g_CI_low = g_stats$CI_low, g_CI_high = g_stats$CI_high)
         ) %>%
