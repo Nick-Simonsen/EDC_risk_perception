@@ -1,0 +1,97 @@
+\documentclass[english,man,floatsintext]{apa7}
+
+\usepackage{csquotes}
+\usepackage[backend=biber,style=apa,natbib=true]{biblatex}
+\DeclareLanguageMapping{english}{english-apa}
+\addbibresource{references.bib}
+
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{xcolor}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{float}
+\usepackage{multirow}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{comment}
+
+\usepackage{amsmath}
+\usepackage{cleveref}
+\usepackage{siunitx}
+\usepackage{pdflscape}
+\usepackage{everypage}
+\usepackage{makecell}
+\usepackage[table]{xcolor}
+
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{textcase}
+
+\geometry{margin=1in}
+\setcounter{secnumdepth}{3}
+
+% Needed because some table files use \resizebox / threeparttable
+\usepackage{graphicx}
+\usepackage{threeparttable}
+
+% Make duplicated \label{} across the two table streams non-fatal
+% (RindexTable, bycat_table, byctry_table, ipw_table appear twice)
+\makeatletter
+\let\orig@label\label
+\renewcommand{\label}[1]{\@bsphack\@esphack}% no-op labels to silence dup warnings
+\makeatother
+
+\title{Tables only}
+\begin{document}
+\doublespacing
+\raggedbottom
+\setlength{\parskip}{0pt}
+\pagestyle{empty}            % no headers / page numbers on the table pages
+
+% Force every float to sit exactly where it is input, one per page.
+\renewcommand{\topfraction}{1.0}
+\renewcommand{\bottomfraction}{1.0}
+\renewcommand{\textfraction}{0.0}
+\renewcommand{\floatpagefraction}{0.0}
+
+% ===================================================================
+% MAIN-TEXT TABLES  ->  Table 1 .. Table 10
+% (order taken from results.tex)
+% ===================================================================
+\input{Results/combined_PCA_table}\clearpage
+
+\input{Results/Likert_Descriptives/likertTable_combined}\clearpage
+
+\input{Results/oneway_anova_pathway_descriptives}\clearpage
+
+\input{Results/Regression_Results_Danish/combined_regression_summaries}\clearpage
+\input{Results/Regression_Results_US/combined_regression_summaries}\clearpage
+\input{Results/Regression_Results_UK/combined_regression_summaries}\clearpage
+
+% ===================================================================
+% SUPPLEMENT TABLES  ->  Table S1 .. Table S12
+% (counter reset + S-prefix mirror supplemental.tex)
+% (order taken from supplemental.tex)
+% ===================================================================
+\setcounter{table}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\input{Results/Likert_Descriptives/likertTable_UK}\clearpage
+\input{Results/Likert_Descriptives/likertTable_DK}\clearpage
+\input{Results/Likert_Descriptives/likertTable_US}\clearpage
+
+\input{Results/RindexTable}\clearpage
+
+\input{Results/health_descriptives}\clearpage
+
+\input{Results/Mixed_Anova_Results/wj_table}\clearpage
+\input{Results/Mixed_Anova_Results/bycat_table}\clearpage
+\input{Results/Mixed_Anova_Results/byctry_table}\clearpage
+\input{Results/Mixed_Anova_Results/ipw_table}\clearpage
+
+\input{Results/Chemical_Label_Effect_Results/chemical_label_contrasts_DK}\clearpage
+\input{Results/Chemical_Label_Effect_Results/chemical_label_contrasts_UK}\clearpage
+\input{Results/Chemical_Label_Effect_Results/chemical_label_contrasts_US}\clearpage
+
+\end{document}

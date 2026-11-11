@@ -1,0 +1,5 @@
+.DS_Store
+/src/__pycache__
+generate_package_versions.R
+package_versions.txt
+Reviewer_responses/*

@@ -1,0 +1,37 @@
+\begin{table}[H]
+\centering
+\caption{Chemical Label Contrasts relative to Pesticides within each Exposure Pathway, US Sample (Holm-adjusted)}
+\label{table:chemical_label_contrasts_US}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\fontsize{9}{11}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{>{\raggedright\arraybackslash}p{3.5cm}>{\raggedright\arraybackslash}p{3.0cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.8cm}>{\raggedleft\arraybackslash}p{1.8cm}}
+\toprule
+Pathway & Chemical label & Estimate & $SE$ & $df$ & $t$ & $p_{\mathrm{adj}}$\\
+\midrule
+\em{Consumption} & BPA & $-1.68$ & $0.25$ & $11718$ & $-6.70$ & $\textit{p} < .001$\\
+\em{Consumption} & Phthalates & $-2.23$ & $0.24$ & $11718$ & $-9.39$ & $\textit{p} < .001$\\
+\em{Consumption} & Parabens & $-3.77$ & $0.29$ & $11718$ & $-13.20$ & $\textit{p} < .001$\\
+\em{Consumption} & PFAS & $-0.45$ & $0.22$ & $11718$ & $-2.05$ & $\textit{p} = .081$\\
+\em{Consumption} & BFRs & $-0.42$ & $0.26$ & $11718$ & $-1.61$ & $\textit{p} = .107$\\
+\addlinespace
+\em{Dermal Application} & BPA & $-3.31$ & $0.25$ & $11718$ & $-13.35$ & $\textit{p} < .001$\\
+\em{Dermal Application} & Phthalates & $-5.11$ & $0.26$ & $11718$ & $-19.90$ & $\textit{p} < .001$\\
+\em{Dermal Application} & Parabens & $-4.44$ & $0.25$ & $11718$ & $-17.96$ & $\textit{p} < .001$\\
+\em{Dermal Application} & PFAS & $-3.84$ & $0.25$ & $11718$ & $-15.46$ & $\textit{p} < .001$\\
+\em{Dermal Application} & BFRs & $-4.35$ & $0.30$ & $11718$ & $-14.67$ & $\textit{p} < .001$\\
+\addlinespace
+\em{Inhalation} & BPA & $-3.13$ & $0.25$ & $11718$ & $-12.51$ & $\textit{p} < .001$\\
+\em{Inhalation} & Phthalates & $-3.80$ & $0.25$ & $11718$ & $-15.06$ & $\textit{p} < .001$\\
+\em{Inhalation} & Parabens & $-3.85$ & $0.25$ & $11718$ & $-15.15$ & $\textit{p} < .001$\\
+\em{Inhalation} & PFAS & $-3.33$ & $0.26$ & $11718$ & $-13.03$ & $\textit{p} < .001$\\
+\em{Inhalation} & BFRs & $-3.84$ & $0.26$ & $11718$ & $-14.59$ & $\textit{p} < .001$\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \textit{Note: } 
+\item Borda scores (higher values indicate greater perceived risk) were modeled using OLS with cluster-robust standard errors clustered by participant. Pesticides served as the reference chemical; $p$-values Holm-adjusted within each pathway.
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}

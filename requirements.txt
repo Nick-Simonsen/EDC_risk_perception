@@ -1,0 +1,5 @@
+geopy==2.4.1
+pandas==3.0.1
+Requests==2.32.5
+uszipcode==1.0.1
+sqlalchemy-mate==2.0.0.0
